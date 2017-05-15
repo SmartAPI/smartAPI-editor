@@ -1,3 +1,8 @@
+
+
+[![DOI](https://zenodo.org/badge/91363919.svg)](https://zenodo.org/badge/latestdoi/91363919)
+
+
 # smartAPI Editor: A tool for semantic annotation of Web APIs
 
 smartAPI Editor is an an extension to [Swagger Editor](https://github.com/swagger-api/swagger-editor/releases). Swagger Editor lets you edit your API document in in YAML inside your browser and to preview documentations in real time. 
