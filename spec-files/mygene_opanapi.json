@@ -1,0 +1,267 @@
+{
+  "openapi": "string",
+  "info": {
+    "version": "3.0.0.2",
+    "title": "MyGene.info API",
+    "description": "Documentation of the MyGene.info Gene Query web services. Learn more about [MyGene.info](http://mygene.info/)",
+    "termsOfService": "http://example.com/terms/",
+    "contact": {
+      "name": "Chunlei Wu",
+      "x-role": "responsible developer",
+      "email": "help@mygene.info",
+      "x-id": "http://orcid.org/0000-0002-2629-6124"
+    },
+    "x-accessRestriction": "none",
+    "x-maturity": "production",
+    "x-implementationLanguage": "python"
+  },
+  "externalDocs": {
+    "description": "Find more info here",
+    "url": "https://example.com"
+  },
+  "x-externalResource": [
+    {
+      "x-url": "http://example.org/api/docs",
+      "x-type": "api documentation"
+    },
+    {
+      "x-url": "https://doi.org/10.1093/nar/gks1114",
+      "x-type": "publication",
+      "x-description": "BioGPS and MyGene.info: organizing online, gene-centric information"
+    },
+    {
+      "x-url": "http://twitter.com/mygeneinfo",
+      "x-type": "social media"
+    }
+  ],
+  "servers": [{
+    "url": "http://mygene.info",
+    "description": "Development server",
+    "x-location": "California, USA"
+  }],
+  "tags": [
+    {
+      "name": "http://purl.bioontology.org/ontology/MESH/D005796",
+      "description": "Genes"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "skipParam": {
+        "name": "skip",
+        "in": "query",
+        "description": "number of items to skip",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "limitParam": {
+        "name": "limit",
+        "in": "query",
+        "description": "max records to return",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "Entity not found."
+      },
+      "IllegalInput": {
+        "description": "Illegal input for operation."
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      },
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "http://example.org/api/oauth/dialog",
+            "scopes": {
+              "write:pets": "modify genes in your account",
+              "read:pets": "read your genes"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/query": {
+      "get": {
+        "description": "Makes gene query and returns matching gene list.",
+        "summary": "Makes gene query and returns matching gene list.",
+        "x-accessRestriction": "free",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Query string. Examples \"CDK2\", \"NM_052827\", \"204639_at\". The detailed query syntax can be found at http://docs.mygene.info/en/latest/doc/query_service.html",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-parameterType": "InputParameter",
+            "x-valueType": [
+              "http://identifiers.org/hgnc.symbol",
+              "http://identifiers.org/refseq",
+              "http://identifiers.org/unigene",
+              "http://identifiers.org/uniprot",
+              "http://identifiers.org/pdb' x-defaultValue: CDK2 x-exampleValue: CDK2 operationId: queryGene responses: responses: "
+            ]
+          }
+        ],
+        "operationId": "add operation id here",
+        "responses": {
+        "200": {
+          "description": "Successful response.",
+          "content": {
+            "application/json": {
+              "x-responseProfile": "http://www.w3.org/ns/anno.jsonld",
+              "x-responseValueType": [
+                {
+                  "path": "a.id",
+                  "valueType": "http://example.org/a.id"
+                },
+                {
+                  "path": "a.b.c.id",
+                  "valueType": "http://example.org/c.id"
+                }
+              ]
+            }
+          }
+        }
+      }
+     }   
+    },
+    "/gene/{geneid}": {
+      "get": {
+        "tags": [
+          "gene"
+        ],
+        "parameters": [
+          {
+            "name": "geneid",
+            "in": "path",
+            "description": "Entrez or Ensembl gene id, e.g., 1017, ENSG00000170248. A retired Entrez Gene id works too if it is replaced by a new one, e.g., 245794",
+            "required": true,
+            "x-parameterType": "InputParameter",
+            "x-valueType": [
+              "http://identifiers.org/ncbigene",
+              "http://identifiers.org/ensembl"
+            ],
+            "x-defaultValue": "add default",
+            "x-exampleValue": "1017"
+          }
+        ],
+        "operationId": "getAnnotation",
+        "summary": "add summary",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+            "x-responseSchema": {
+              "properties": {
+                "reporter": {
+                  "properties": {
+                    "HTA-2_0": {
+                      "type": "string"
+                    },
+                    "HG-U133_Plus_2": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "HuEx-1_0": {
+                      "type": "integer"
+                    },
+                    "HuGene-1_1": {
+                      "type": "integer"
+                    },
+                    "HuGene-2_1": {
+                      "type": "integer"
+                    },
+                    "HG-U95Av2": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            
+            "x-responseValueType": [
+              {
+                "path": "ec",
+                "valueType": "http://identifiers.org/ec-code/"
+              },
+              {
+                "path": "ensembl.gene",
+                "valueType": "http://identifiers.org/ensembl/"
+              },
+              {
+                "path": "ensembl.translation.protein",
+                "valueType": "http://identifiers.org/ensembl/"
+              },
+              {
+                "path": "ensembl.translation.rna",
+                "valueType": "http://identifiers.org/ensembl/"
+              },
+              {
+                "path": "entrezgene",
+                "valueType": "http://identifiers.org/ncbigene/"
+              },
+              {
+                "path": "generif.pubmed",
+                "valueType": "http://identifiers.org/pubmed/"
+              }
+            ]
+          }
+        }
+      }
+     }
+   }
+  }
+ }
+}
