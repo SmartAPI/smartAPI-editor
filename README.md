@@ -28,8 +28,8 @@ Make sure you have [Node.js](http://nodejs.org/) installed.
 Running the editor:
 
 ```shell
-git clone https://github.com/WebsmartAPI/swagger-editor.git
-cd swagger-editor
+git clone https://github.com/SmartAPI/smartAPI-editor.git
+cd smartAPI-editor
 npm install
 chmod 755 scripts/nmchange.sh
 ./scripts/nmchange.sh
